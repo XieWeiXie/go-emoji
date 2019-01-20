@@ -2,14 +2,19 @@ package cmd
 
 import (
 	"fmt"
+	"go-emoji/cmd/emoji"
+	"go-emoji/models"
 	"go-emoji/pkg/database"
+	"log"
 	"os"
+
+	"github.com/jinzhu/gorm"
 
 	"github.com/spf13/cobra"
 )
 
 const (
-	AppName = "go-emoji"
+	AppName = "emoji"
 )
 
 var rootCMD = &cobra.Command{
@@ -22,6 +27,8 @@ func fetch(cmd *cobra.Command, args []string) {
 		helper()
 		return
 	}
+	database.DataBaeInit()
+	defer database.POSTGRESDIALECT.Close()
 	switch args[0] {
 	case "import":
 		if err := importEmoji(); err != nil {
@@ -32,9 +39,10 @@ func fetch(cmd *cobra.Command, args []string) {
 			panic("export emoji data error")
 		}
 	case "db":
+		log.Println(args)
 		switch args[1] {
 		case "migrate":
-			migrateTable(args[2])
+			migrateTable(database.POSTGRESDIALECT)
 		}
 	}
 
@@ -45,21 +53,30 @@ func helper() string {
 }
 
 func importEmoji() error {
+	fetcher := emoji_fetch.NewFetcher("https://emojipedia.org/emoji/")
+	fetcher.Run()
 	return nil
 }
 
 func exportEmoji() error {
+	path := "./src/emoji_map.go"
+	_, err := os.Stat(path)
+	if os.IsNotExist(err) {
+		os.Create(path)
+	}
+
 	return nil
 }
 
-func migrateTable(dialect string) {
-
-	for _, i := range database.ModelsCollection() {
-		if dialect == "sqlite" {
-			database.SQLITE3DIALECT.AutoMigrate(i)
-		} else {
-			database.POSTGRESDIALECT.AutoMigrate(i)
-		}
+func migrateTable(dialect *gorm.DB) {
+	for _, i := range models.Collection() {
+		fmt.Println("---Migrate:")
+		dialect.AutoMigrate(i)
+	}
+	var version models.Version
+	if dbError := dialect.Where("version_name = ?", "12.0").First(&version).Error; dbError != nil {
+		version.VersionName = "12.0"
+		dialect.Save(&version)
 	}
 }
 

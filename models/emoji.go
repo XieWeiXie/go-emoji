@@ -7,12 +7,12 @@ import (
 
 type Emoji struct {
 	gorm.Model
-	Title       string         `gorm:"type:varchar" json:"title"`
-	CodePoints  string         `gorm:"type:varchar" json:"code_points"`
-	Description string         `gorm:"type:varchar" json:"description"`
-	ShortCodes  string         `gorm:"type:varchar" json:"short_codes"`
-	Tags        pq.StringArray `json:"tags"`
-	VersionID   uint
+	Title      string         `gorm:"type:varchar" json:"title"`
+	CodePoints string         `gorm:"type:varchar" json:"code_points"`
+	ShortCodes string         `gorm:"type:varchar" json:"short_codes"`
+	Tags       pq.StringArray `gorm:"type:varchar[]" json:"tags"`
+	Url        string         `gorm:"type:varchar" json:"url"`
+	VersionID  uint
 }
 
 func (Emoji) TableName() string {
@@ -26,4 +26,11 @@ type Version struct {
 
 func (Version) TableName() string {
 	return "emoji_unicode_version"
+}
+
+func Collection() []interface{} {
+	return []interface{}{
+		&Emoji{},
+		&Version{},
+	}
 }

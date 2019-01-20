@@ -2,6 +2,8 @@ package emoji
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 	"unicode"
 )
 
@@ -15,6 +17,26 @@ func NewEmoji() Emoji {
 	return Emoji{
 		Version: version,
 	}
+}
+
+func (e Emoji) ShortCodeList() []string {
+	var keys []string
+	for k := range MapEmoji {
+		keys = append(keys, k)
+	}
+	return keys
+}
+
+func (e Emoji) CodePoints() []string {
+	var values []string
+	for _, v := range MapEmoji {
+		vv := `\` + strings.Replace(v, "+", "000", -1)
+		fmt.Println(vv)
+		fmt.Println(strconv.QuoteToASCII(vv))
+		values = append(values, vv)
+	}
+	fmt.Println("\U0001F47B")
+	return values
 }
 
 func (e Emoji) Code(shortCode string) (interface{}, error) {
