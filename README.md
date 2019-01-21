@@ -92,3 +92,6 @@ fmt.Println(emo.CodePoints())
 - Exists
 > 根据 short code 判定是否支持 emoji
 
+📃 License
+
+MIT ©xiewei
