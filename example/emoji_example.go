@@ -2,7 +2,7 @@ package example
 
 import (
 	"fmt"
-	"go-emoji/src/emoji"
+	"go-emoji/emoji"
 )
 
 func EmojiExample() {

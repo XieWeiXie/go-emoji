@@ -1,4 +1,4 @@
-module go-emoji
+module github.com/wuxiaoxiaoshen/go-emoji
 
 require (
 	cloud.google.com/go v0.34.0 // indirect
