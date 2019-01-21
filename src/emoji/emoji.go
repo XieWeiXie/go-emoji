@@ -1,8 +1,8 @@
 package emoji
 
 import (
+	"bytes"
 	"fmt"
-	"strconv"
 	"strings"
 	"unicode"
 )
@@ -31,12 +31,35 @@ func (e Emoji) CodePoints() []string {
 	var values []string
 	for _, v := range MapEmoji {
 		vv := `\` + strings.Replace(v, "+", "000", -1)
-		fmt.Println(vv)
-		fmt.Println(strconv.QuoteToASCII(vv))
-		values = append(values, vv)
+		in := bytes.NewBufferString(vv)
+		out := bytes.NewBufferString("")
+		for {
+			i, _, err := in.ReadRune()
+			if err != nil {
+				break
+			}
+			out.WriteRune(i)
+		}
+		values = append(values, out.String())
 	}
-	fmt.Println("\U0001F47B")
 	return values
+}
+
+func (e Emoji) Print(a ...interface{}) {
+	b := &a
+	for i, x := range *b {
+		in := bytes.NewBufferString(x.(string))
+		out := bytes.NewBufferString("")
+		for {
+			i, _, err := in.ReadRune()
+			if err != nil {
+				break
+			}
+			out.WriteRune(i)
+		}
+		(*b)[i] = out.String()
+	}
+	fmt.Println(a...)
 }
 
 func (e Emoji) Code(shortCode string) (interface{}, error) {
