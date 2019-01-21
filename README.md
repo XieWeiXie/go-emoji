@@ -2,6 +2,11 @@
 
 > golang 版的 emoji 表情使用包
 
+
+### Usage
+
+
+
 ### :open_mouth: 原理介绍
 
 :email: 收集码点
@@ -10,6 +15,7 @@
 - [github emoji](https://api.github.com/emojis)
 - [Full emoji unicode](https://emojipedia.org/emoji/)
 - [emoji table](https://apps.timwhitlock.info/emoji/tables/unicode)
+- [emoji](https://www.webfx.com/tools/emoji-cheat-sheet/)
 
 
 :love_letter: 处理码点

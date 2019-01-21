@@ -1,8 +1,7 @@
 package main
 
-import "go-emoji/example"
+import "fmt"
 
 func main() {
-	//cmd.Execute()
-	example.EmojiExample()
+	fmt.Println("hello world")
 }
