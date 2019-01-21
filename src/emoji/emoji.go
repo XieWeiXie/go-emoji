@@ -143,11 +143,11 @@ func (e Emoji) Exists(shortCode string) bool {
 	return true
 }
 
-func (e Emoji) Versions() (string, error) {
+func (e Emoji) Versions() string {
 	if e.Version == "" {
-		return "No version", nil
+		return "No version"
 	}
-	return e.Version, nil
+	return e.Version
 }
 
 func (e Emoji) Length() int {

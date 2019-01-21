@@ -1,9 +1,8 @@
 package main
 
-import (
-	"go-emoji/cmd"
-)
+import "go-emoji/example"
 
 func main() {
-	cmd.Execute()
+	//cmd.Execute()
+	example.EmojiExample()
 }
