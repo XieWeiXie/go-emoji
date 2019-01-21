@@ -62,5 +62,21 @@ func TestPrint2(tests *testing.T) {
 	emoji := NewEmoji()
 	for _, t := range tt {
 		emoji.Print(t.value)
+		emoji.Println(t.value)
+		emoji.Code(t.value)
+	}
+}
+
+func TestEmojiCode(tests *testing.T) {
+	tt := []struct {
+		value string
+	}{
+		{
+			value: ":wink:",
+		},
+	}
+	emoji := NewEmoji()
+	for _, t := range tt {
+		fmt.Println(emoji.Code(t.value))
 	}
 }
