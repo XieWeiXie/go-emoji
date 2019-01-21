@@ -2,81 +2,71 @@ package emoji
 
 import (
 	"fmt"
-	"html"
-	"strconv"
 	"testing"
 )
 
-func TestEmojiShortCodeList(tests *testing.T) {
-	emoji := NewEmoji()
+var emoji = NewEmoji()
+
+func TestShortCodeList(tests *testing.T) {
 	fmt.Println(emoji.ShortCodeList())
 }
 
-func TestEmojiCodePoints(tests *testing.T) {
-	emoji := NewEmoji()
+func TestCodePoints(tests *testing.T) {
 	fmt.Println(emoji.CodePoints())
 }
 
-func TestPrint(tests *testing.T) {
-
-	emoji := NewEmoji()
-	for _, i := range emoji.CodePoints() {
-		hex, _ := strconv.ParseInt(i, 16, 64)
-		str := html.UnescapeString("&#" + strconv.Itoa(int(hex)) + ";")
-		fmt.Println(str)
-	}
-
-}
-
 func TestMap(tests *testing.T) {
-	emoji := NewEmoji()
 	fmt.Println(emoji.Map())
 }
 
-func TestMapSinge(tests *testing.T) {
-	emoji := NewEmoji()
-	tt := []struct {
-		value string
-	}{
-		{
-			value: ":yum:",
-		}, {
-			value: ":anguished:",
-		},
-	}
-	for _, t := range tt {
-		fmt.Println(emoji.MapSingle(t.value))
+func TestMapSingle(tests *testing.T) {
+	for k, _ := range MapEmoji {
+		fmt.Println(emoji.MapSingle(k))
 	}
 }
 
-func TestPrint2(tests *testing.T) {
-	tt := []struct {
-		value string
-	}{
-		{
-			value: ":yum:",
-		}, {
-			value: ":anguished:",
-		},
-	}
-	emoji := NewEmoji()
-	for _, t := range tt {
-		emoji.Print(t.value)
-		emoji.Println(t.value)
-		emoji.Code(t.value)
+func TestCompile(tests *testing.T) {
+	for k, _ := range MapEmoji {
+		fmt.Println(emoji.Compile(k))
 	}
 }
 
-func TestEmojiCode(tests *testing.T) {
-	tt := []struct {
-		value string
-	}{
-		{
-			value: ":wink:",
-		},
+func TestPrint(tests *testing.T) {
+	for _, i := range emoji.ShortCodeList() {
+		emoji.Print(i)
 	}
-	emoji := NewEmoji()
-	for _, t := range tt {
-		fmt.Println(emoji.Code(t.value))
+}
+
+func TestPrintln(t *testing.T) {
+	for _, i := range emoji.ShortCodeList() {
+		emoji.Println(i)
+	}
+}
+
+func TestPrintf(t *testing.T) {
+	for _, i := range emoji.ShortCodeList() {
+		emoji.Printf("%s\n", i)
+	}
+}
+
+func TestCode(tests *testing.T) {
+	for _, i := range emoji.ShortCodeList() {
+		fmt.Println(emoji.Code(i))
+	}
+}
+
+func TestEmoji_UnicodeByShortCode(t *testing.T) {
+	for _, i := range emoji.ShortCodeList() {
+		fmt.Println(emoji.UnicodeByShortCode(i))
+	}
+}
+
+func TestEmoji_Versions(t *testing.T) {
+	fmt.Println(emoji.Version)
+}
+
+func TestEmoji_Exists(t *testing.T) {
+	for _, i := range emoji.ShortCodeList() {
+		fmt.Println(emoji.Exists(i))
 	}
 }
