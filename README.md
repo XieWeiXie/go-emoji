@@ -5,6 +5,11 @@
 
 ### Usage
 
+```
+go get github.com/wuxiaoxiaoshen/go-emoji
+```
+
+
 
 
 ### :open_mouth: 原理介绍

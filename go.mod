@@ -3,7 +3,7 @@ module go-emoji
 require (
 	cloud.google.com/go v0.34.0 // indirect
 	github.com/PuerkitoBio/goquery v1.5.0
-	github.com/denisenkom/go-mssqldb v0.0.0-20190111225525-2fea367d496d // indirect
+	github.com/denisenkom/go-mssqldb v0.0.0-20190121005146-b04fd42d9952 // indirect
 	github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5 // indirect
 	github.com/go-sql-driver/mysql v1.4.1 // indirect
 	github.com/gofrs/uuid v3.2.0+incompatible // indirect
