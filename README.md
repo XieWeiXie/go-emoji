@@ -1,4 +1,6 @@
-# Go-Emoji
+# go-emoji
+
+[![GoDoc](https://godoc.org/github.com/wuxiaoxiaoshen/go-emoji/emoji?status.svg)](https://godoc.org/github.com/wuxiaoxiaoshen/go-emoji/emoji)
 
 > golang 版的 emoji 表情使用包
 
