@@ -18,25 +18,49 @@ func TestEmojiCodePoints(tests *testing.T) {
 }
 
 func TestPrint(tests *testing.T) {
+
+	emoji := NewEmoji()
+	for _, i := range emoji.CodePoints() {
+		hex, _ := strconv.ParseInt(i, 16, 64)
+		str := html.UnescapeString("&#" + strconv.Itoa(int(hex)) + ";")
+		fmt.Println(str)
+	}
+
+}
+
+func TestMap(tests *testing.T) {
+	emoji := NewEmoji()
+	fmt.Println(emoji.Map())
+}
+
+func TestMapSinge(tests *testing.T) {
+	emoji := NewEmoji()
 	tt := []struct {
 		value string
 	}{
 		{
-			value: "U+1F616 ",
+			value: ":yum:",
+		}, {
+			value: ":anguished:",
 		},
 	}
 	for _, t := range tt {
-		//input := bytes.NewBufferString(t.value)
-		fmt.Println(strconv.Unquote(t.value))
+		fmt.Println(emoji.MapSingle(t.value))
+	}
+}
+
+func TestPrint2(tests *testing.T) {
+	tt := []struct {
+		value string
+	}{
+		{
+			value: ":yum:",
+		}, {
+			value: ":anguished:",
+		},
 	}
 	emoji := NewEmoji()
-	for _, i := range emoji.CodePoints() {
-		r := []rune(i)
-		for _, ii := range r {
-			html.UnescapeString("&#" + strconv.Itoa(int(ii)) + ";")
-			//fmt.Println(str)
-
-		}
-
+	for _, t := range tt {
+		emoji.Print(t.value)
 	}
 }

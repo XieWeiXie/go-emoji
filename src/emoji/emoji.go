@@ -1,8 +1,9 @@
 package emoji
 
 import (
-	"bytes"
 	"fmt"
+	"html"
+	"strconv"
 	"strings"
 	"unicode"
 )
@@ -30,36 +31,52 @@ func (e Emoji) ShortCodeList() []string {
 func (e Emoji) CodePoints() []string {
 	var values []string
 	for _, v := range MapEmoji {
-		vv := `\` + strings.Replace(v, "+", "000", -1)
-		in := bytes.NewBufferString(vv)
-		out := bytes.NewBufferString("")
-		for {
-			i, _, err := in.ReadRune()
-			if err != nil {
-				break
-			}
-			out.WriteRune(i)
-		}
-		values = append(values, out.String())
+		vv := strings.Replace(v, "U+", "", -1)
+		values = append(values, vv)
 	}
 	return values
 }
 
-func (e Emoji) Print(a ...interface{}) {
-	b := &a
-	for i, x := range *b {
-		in := bytes.NewBufferString(x.(string))
-		out := bytes.NewBufferString("")
-		for {
-			i, _, err := in.ReadRune()
-			if err != nil {
-				break
-			}
-			out.WriteRune(i)
-		}
-		(*b)[i] = out.String()
+func (e Emoji) Map() map[string]int64 {
+	var results = make(map[string]int64)
+	for k, v := range MapEmoji {
+		newV := strings.Replace(v, "U+", "", -1)
+		//fmt.Println(newV, v)
+		hex, _ := strconv.ParseInt(newV, 16, 64)
+		results[k] = hex
 	}
-	fmt.Println(a...)
+	return results
+}
+
+func (e Emoji) MapSingle(key string) int64 {
+	allResults := e.Map()
+	if v, ok := allResults[key]; ok {
+		return v
+	}
+	return -1
+}
+
+func (e Emoji) compile(a *[]interface{}) {
+	for i, x := range *a {
+		if str, ok := x.(string); ok {
+			(*a)[i] = e.MapSingle(str)
+		}
+	}
+}
+
+func (e Emoji) Print(a ...interface{}) (int, error) {
+	var full string
+	for _, i := range a {
+		value := e.MapSingle(i.(string))
+		var str string
+		if value != 0 {
+			str = html.UnescapeString("&#" + strconv.Itoa(int(value)) + ";")
+			full += str
+		} else {
+			full += i.(string)
+		}
+	}
+	return fmt.Print(full)
 }
 
 func (e Emoji) Code(shortCode string) (interface{}, error) {
