@@ -9,7 +9,56 @@
 go get github.com/wuxiaoxiaoshen/go-emoji
 ```
 
+```go
+package main
 
+import (
+	"fmt"
+	"github.com/wuxiaoxiaoshen/go-emoji/emoji"
+)
+
+func main() {
+	emo := emoji.NewEmoji()
+	fmt.Println(emo.Version)
+	for _, i := range emo.ShortCodeList(){
+		emo.Println(i)
+	}
+
+
+}
+
+```
+
+```text
+🔤
+😢
+🍳
+📛
+👱
+😴
+🌐
+💗
+🐀
+👒
+🐊
+😨
+🐆
+🔊
+📰
+🐩
+😃
+💿
+😕
+👗
+📠
+🌃
+💒
+🐳
+👿
+🍃
+...
+
+```
 
 
 ### :open_mouth: 原理介绍
