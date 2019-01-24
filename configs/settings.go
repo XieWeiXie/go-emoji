@@ -7,6 +7,6 @@ const (
 	DATABASE = "emoji_data"
 	SSLMODE  = "disable"
 	USER     = "postgres"
-	PASSWORD = "''"
+	PASSWORD = "root"
 	PORT     = "5432"
 )

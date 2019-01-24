@@ -29,6 +29,7 @@ func fetch(cmd *cobra.Command, args []string) {
 	}
 	database.DataBaeInit()
 	defer database.POSTGRESDIALECT.Close()
+	log.Println(args)
 	switch args[0] {
 	case "import":
 		if err := importEmoji(); err != nil {
